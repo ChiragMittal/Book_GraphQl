@@ -4,9 +4,16 @@ const app        = express()
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const graphHTTP = require('express-graphql')
+const mongoose = require('mongoose')
 
 const port =  3000
 const schema = require('./schema/schema')
+
+mongoose.connect('mongodb+srv://chg007:Chiragmittal9798@cluster007-kfmkq.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connection.once('open',()=>{
+    console.log('connected to database')
+})
+
 
 app.use(function(req,res,next){
     res.header("Access-Control-Allow-Origin", "*");
