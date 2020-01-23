@@ -5,14 +5,17 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const graphHTTP = require('express-graphql')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
-const port =  3000
+const port =  4000
 const schema = require('./schema/schema')
 
 mongoose.connect('mongodb+srv://chg007:Chiragmittal9798@cluster007-kfmkq.mongodb.net/test?retryWrites=true&w=majority')
 mongoose.connection.once('open',()=>{
     console.log('connected to database')
 })
+
+app.use(cors())
 
 
 app.use(function(req,res,next){
