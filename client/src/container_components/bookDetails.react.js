@@ -9,8 +9,8 @@ class BookDetails extends Component {
     bookDetails = (e) => {
 
        // e.preventDefault();
-        const single_book_detail = this .props.data.book
-        console.log(single_book_detail)
+        const single_book_detail = this.props.data.book
+       
 
         if(single_book_detail){
             return(

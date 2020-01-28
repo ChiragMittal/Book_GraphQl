@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {graphql} from 'react-apollo'
-
-import {getBookQuery} from '../queries/queries'
+import {flowRight as compose} from 'lodash'
+import {getBookQuery,dleteBook} from '../queries/queries'
 import BookDetails from '../container_components/bookDetails.react'
 
 
@@ -17,17 +17,34 @@ class BookList extends Component {
     };
 }
 
+deleteSingleBook = (id) =>{
+  //e.preventDefault();
+  console.log(id)
+  this.props.dleteBook({ variables:{ id },
+      refetchQueries :[{query : getBookQuery}]
+    
+})
+console.log(id) 
+}
+
 showBooks(){
-    var data = this.props.data
-    console.log(data.all_books)
+    var data = this.props.getBookQuery
+    console.log(data)
     if(data.loading){
         return (<div>Loading</div>)
     }
     else{
-        return data.all_books.map(book  =>{
+        return data.all_books.map(({id,name})  =>{
 
             return (
-                <li key={book.id} onClick={(e) => {this.setState ({ selected : book.id })}}>{book.name}</li>
+              <div>
+                <li key={id} onClick={(e) => {this.setState ({ selected : id })}}>{name}    
+                </li>
+
+                  <button onClick={() => this.deleteSingleBook(id)}>
+                  delete
+                  </button>
+            </div>
             )
 
         })
@@ -47,4 +64,8 @@ showBooks(){
   }
 }
 
-export default graphql(getBookQuery)(BookList);
+
+export default compose (
+  graphql(getBookQuery , {name:'getBookQuery'}),
+  graphql(dleteBook, {name:'dleteBook'})
+)(BookList);

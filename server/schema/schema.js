@@ -99,6 +99,17 @@ const Mutation = new GraphQLObjectType({
 
                 return book.save()
             }
+        },
+        deleteBook:{
+            type:Book,
+            args:{
+                id: { type: new GraphQLNonNull(GraphQLString) }
+            },
+            resolve(parent,{id}){
+                    //return Books.delete(id)
+
+                    return Books.deleteOne({_id:id})
+            }
         }
     }
 })

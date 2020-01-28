@@ -41,3 +41,11 @@ query($id:ID!){
 
     }
 `
+
+export const dleteBook = gql`
+mutation($id:String!){
+    deleteBook(id:$id){
+        id
+    }
+}
+`
